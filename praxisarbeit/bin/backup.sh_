@@ -22,7 +22,7 @@ cat "$GROUPS_FILE" | while read groupname; do
     continue
   fi
 
-  for username in $(getent group $groupname | cut -d: -f4); do
+  for username in $(getent group $groupname | cut -d: -f1); do
     if [ ! "$(getent passwd $username)" ]; then # check if user exists
       echo "WARNING: user $username doesn't exists."
       continue
