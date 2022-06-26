@@ -41,6 +41,12 @@ cat "$GROUPS_FILE" | while read groupname; do
     fi
 
     home_dir=$(getent passwd $username | cut -d: -f6)
+
+    if [ ! "$home_dir" ]; then # check if user home exists
+      echo "WARNING: user $username has no home. Skipping..."
+      continue
+    fi
+
     tmp_user_name=$(getent passwd $username | cut -d/ -f3 | cut -d: -f1)
     user_backup_dir="$BACKUP_PREFIX$tmp_user_name"
 
@@ -52,7 +58,7 @@ cat "$GROUPS_FILE" | while read groupname; do
     else
       tar -cf $BACKUP_DIR $user_backup_dir
     fi
-    cd $pwd
+    cd $cwd
     echo "SUCCESS: created backup for user $username ($groupname) > $home_dir"
   done
   rm -rf $TEMPDIR
