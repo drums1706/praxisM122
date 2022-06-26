@@ -22,8 +22,6 @@ while getopts p optvar; do
   shift
 done
 
-echo "using prefix $BACKUP_PREFIX"
-
 BACKUP_DIR=$1/home-backup.tar.gz
 
 GROUPS_FILE=$ETCDIR/groups.conf
@@ -51,7 +49,11 @@ cat "$GROUPS_FILE" | while read groupname; do
     user_backup_dir="$BACKUP_PREFIX$tmp_user_name"
 
     cd $TEMPDIR
-    cp -r $home_dir . && mv $tmp_user_name $user_backup_dir >> /dev/null
+    cp -r $home_dir .
+    
+    if [ ! "$BACKUP_PREFIX"]; then
+      mv $tmp_user_name $user_backup_dir
+    fi
 
     if [ -f $BACKUP_DIR ]; then
       tar -rf $BACKUP_DIR $user_backup_dir
