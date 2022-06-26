@@ -6,7 +6,7 @@ BINDIR=`pwd`
 cd $cwd
 BASENAME=`basename $0`
 ETCDIR=$BINDIR/../etc
-. $ETCDIR/$BASENAME # Load config file
+#. $ETCDIR/$BASENAME # Load config file
 
 usage() {
     echo "Usage: $BASENAME [users file] [options]"
@@ -20,7 +20,7 @@ while getopts p: optvar ; do
    esac
 done
 
-if [ "$PASSWORD" -ne "" ]; then
+if [ ! "$PASSWORD" ]; then
     echo "Error: password not specified"
     exit 2
 fi
@@ -37,7 +37,7 @@ cat "$USERS_FILE" | while read username groupname firstname lastname; do
         groupadd $groupname
     fi
 
-    if [ grep "^$grouname$" $ETCDIR/groups.conf -eq "" ]; then # check if group is backed-up by script 2
+    if [ ! "$(grep ^$grouname$ $ETCDIR/groups.conf)" ]; then # check if group is backed-up by script 2
         echo "Warning: group is not a backed-up group"
     fi
    
