@@ -43,7 +43,7 @@ cat "$GROUPS_FILE" | while read groupname; do
     folder_name="$BACKUP_PREFIX$user_folder_name"
 
     cd $TEMPDIR
-    mkdir $user_folder_name && cp -r $home_dir $_ && mv $user_folder_name $folder_name
+    cp -r $home_dir $user_folder_name && mv $user_folder_name $folder_name
 
     if [ -f $BACKUP_DIR ]; then
       tar -rf $BACKUP_DIR $folder_name > /dev/null
