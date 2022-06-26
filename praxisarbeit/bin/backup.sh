@@ -7,6 +7,7 @@ cd $cwd
 BASENAME=`basename $0`
 ETCDIR=$BINDIR/../etc
 TEMPDIR=/temp/homebackup
+mkdir $TEMPDIR
 
 usage() {
   echo "Usage: $BASENAME [options] [backup dir]"
@@ -14,11 +15,11 @@ usage() {
 }
 
 while getopts p optvar; do
-    case $optvar in
+  case $optvar in
 		p) BACKUP_PREFIX=${OPTARG} && shift ;;
 		*) usage ;;
 	esac
-    shift
+  shift
 done
 
 BACKUP_DIR=$1/home-backup.tar.gz
@@ -39,7 +40,6 @@ cat "$GROUPS_FILE" | while read groupname; do
 
     home_dir=$(getent passwd $username | cut -d: -f6)
     foldername=$(getent passwd $username | cut -d/ -f3 | cut -d: -f1)
-    echo "$home_dir > $TEMPDIR; $foldername"
     cp -r $home_dir $TEMPDIR
 
     if [ -f $BACKUP_DIR ]; then
@@ -48,6 +48,6 @@ cat "$GROUPS_FILE" | while read groupname; do
       tar -cf -C $BACKUP_DIR $TEMPDIR/$foldername
     fi
     echo "SUCCESS: created backup for user $username ($groupname) > $home_dir"
-    rm -rf $TEMPDIR/$foldername
   done
+  rm -rf $TEMPDIR
 done
