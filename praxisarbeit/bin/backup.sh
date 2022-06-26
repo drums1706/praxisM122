@@ -16,7 +16,7 @@ usage() {
 
 while getopts p optvar; do
   case $optvar in
-		p) BACKUP_PREFIX="$OPTARG\_" && shift ;;
+		p) BACKUP_PREFIX=${OPTARG} && shift ;;
 		*) usage ;;
 	esac
   shift
