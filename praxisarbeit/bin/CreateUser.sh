@@ -42,6 +42,6 @@ cat "$USERS_FILE" | while read username groupname firstname lastname; do
         continue
     fi
 
-    useradd "$username" -g "$groupname" -m -k /etc/skel -p "$PASSWORD" -c "$firstname $lastname"
+    useradd "$username" -g "$groupname" -m -k /etc/skel -p $(openssl passwd -1 "$PASSWORD") -c "$firstname $lastname"
     passwd --expire "$username"
 done
