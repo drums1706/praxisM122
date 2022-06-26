@@ -33,6 +33,7 @@ cat "$GROUPS_FILE" | while read groupname; do
   fi
 
   for username in $(awk -F ':' "/${groupname}/"'{print $4}' /etc/group | tr ',' '\n'); do # get all users space separated
+    echo "--------------------> Using user $username in group $groupname"
     if [ ! "$(getent passwd $username)" ]; then # check if user exists
       echo "WARNING: user $username doesn't exists."
       continue
@@ -48,8 +49,8 @@ cat "$GROUPS_FILE" | while read groupname; do
     else
       tar -cf $BACKUP_DIR $foldername > /dev/null
     fi
+    cd $pwd
     echo "SUCCESS: created backup for user $username ($groupname) > $home_dir"
   done
-  cd $pwd
   rm -rf $TEMPDIR
 done
