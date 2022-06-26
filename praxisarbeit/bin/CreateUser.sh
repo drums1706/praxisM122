@@ -13,7 +13,7 @@ usage() {
     exit 1
 }
 
-while getopts p: optvar ; do
+while getopts p optvar ; do
    case $optvar in
      p) PASSWORD="${OPTARG}" ;;
      *) usage ;;
@@ -34,7 +34,7 @@ cat "$USERS_FILE" | while read username groupname firstname lastname; do
         groupadd $groupname
     fi
 
-    if [ ! "$(grep ^$grouname$ $ETCDIR/groups.conf)" ]; then # check if group is backed-up by script 2
+    if [ ! "$(grep ^$groupname$ $ETCDIR/groups.conf)" ]; then # check if group is backed-up by script 2
         echo "Warning: group is not a backed-up group"
     fi
    
