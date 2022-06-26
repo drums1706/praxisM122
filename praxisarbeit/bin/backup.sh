@@ -51,7 +51,7 @@ cat "$GROUPS_FILE" | while read groupname; do
     cd $TEMPDIR
     cp -r $home_dir .
     
-    if [ ! "$BACKUP_PREFIX"]; then
+    if [ "$BACKUP_PREFIX" -ne "" ]; then
       mv $tmp_user_name $user_backup_dir
     fi
 
