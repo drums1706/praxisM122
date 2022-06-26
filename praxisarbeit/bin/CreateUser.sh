@@ -13,7 +13,7 @@ usage() {
     exit 1
 }
 
-while getopts p optvar; do
+while getopts 'p' optvar; do
     case $optvar in
         p) echo "YEE, $OPTARG" ;; # PASSWORD="${OPTARG}"
         *) usage ;;
@@ -30,16 +30,16 @@ fi
 
 cat "$USERS_FILE" | while read username groupname firstname lastname; do
     if [ ! "$(getent group $groupname)" ]; then # check if group exists
-        echo "Warning: Group $groupname doesn't exists. Create new group..."
+        echo "Warning: group $groupname doesn't exists. Create new group..."
         groupadd $groupname
     fi
 
     if [ ! "$(grep ^$groupname$ $ETCDIR/groups.conf)" ]; then # check if group is backed-up by script 2
-        echo "Warning: group $groupname is not a backed-up group"
+        echo "Warning: group $groupname is not a backed-up group."
     fi
    
     if [ "$(getent passwd $username)" ]; then # check if user already exists
-        echo "Warning: User $username already exists. Skipping..."
+        echo "Warning: user $username already exists. Skipping..."
         continue
     fi
 
