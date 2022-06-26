@@ -22,6 +22,8 @@ while getopts p optvar; do
   shift
 done
 
+echo "using prefix $BACKUP_PREFIX"
+
 BACKUP_DIR=$1/home-backup.tar.gz
 
 GROUPS_FILE=$ETCDIR/groups.conf
