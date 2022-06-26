@@ -21,8 +21,6 @@ while getopts p: optvar; do
     shift
 done
 
-echo "Default password is: $PASSWORD"
-
 USERS_FILE=$1
 if [ ! -f "$USERS_FILE" ]; then
     echo "Error: users file ($USERS_FILE) doesnt exist."
