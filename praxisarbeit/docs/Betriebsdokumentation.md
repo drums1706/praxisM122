@@ -2,31 +2,49 @@
 [[_TOC_]]
 ## Einführungstext 
 
-TODO: In 2-3 Sätzen beschreiben was die Skripte grundsaetzlich tun.
+Unser Auftrag war es zwei verschiedene Scripte zu erstellen, die verschiedene Funktionen haben. Das erste Script soll verschiedene User kreieren mit bestimmten angaben und das zweite Script soll die verschiedenen Gruppen backupen.
 
 ## Installationsanleitung für Administratoren
 
+### Vorinstallation
+* Ubuntu 20.04.4 LTS
+
 ### Installation
 
-TODO: Wie ist das Skript zu installieren. (z.B. apt-get install ... oder tar xvf .... oder ...)
+1. Das Repository Clonen
+````
+git clone https://github.com/drums1706/praxisM122
+````
+
+2. Konfigurationen anpassen
 
 ### Konfiguration
 
-TODO: Beschreibung der Konfigurationsfiles (Beispiel-Files erstellen im Repo)
+Das konfigurationsfile in `etc/` umbennen
+````
+groups.config.example > groups.confg
+````
 
-TODO: Wie ist ein allfaelliger Cronjob einzurichten
-
-TODO: Wie sind User-Home-Templates einzurichten
-
-....
+Die Gruppen wie im vorgegebenen Beispiel (groups.config.example) setzen. Eine Gruppe pro Line.
 
 ## Bediensanleitung Benutzer
 
-TODO: Erzeugen der Input-Files beschreiben, falls noetig
+### User Input File
 
-TODO: beschreiben des Scriptaufruf
+Für das Script createuser.sh muss man nun die verschiedenen im folgenden Format eingeben:
 
-TODO: beschreiben der erzeugt files (falls solche erzeugt werden)
+````
+<username> <groupname> <vorname> <nachname>
+````
 
-TODO: Lokation von logfiles und bekannte Fehlermeldungen beschreiben.
+### Das Script createuser.sh aufrufen
+Mit Folgendem Befehl kann man einen User generieren.
+```
+sudo ./createuser.sh -p [user password] [path to userfile]
+```
 
+### Das Script backup.sh aufrufen
+Mit Folgendem Befehl kann man einen Backup ausführen.
+````
+sudo ./backup.sh -p [prefix] [path to backupfolder]
+````
