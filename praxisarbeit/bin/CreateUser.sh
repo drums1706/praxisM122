@@ -8,11 +8,11 @@ BASENAME=`basename $0`
 ETCDIR=$BINDIR/../etc
 
 usage() {
-    echo "Usage: $BASENAME [users file] [options]"
+    echo "Usage: $BASENAME [options] [users file]"
     exit 1
 }
 
-while getopts p: optvar; do
+while getopts p optvar; do
     case $optvar in
 		p) PASSWORD=${OPTARG} && shift ;;
 		*) usage ;;
