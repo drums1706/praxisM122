@@ -6,15 +6,24 @@ BINDIR=`pwd`
 cd $cwd
 BASENAME=`basename $0`
 ETCDIR=$BINDIR/../etc
+TEMPDIR=$BINDIR/../temp
 
 usage() {
   echo "Usage: $BASENAME [options] [backup dir]"
   exit 1
 }
 
-BACKUP_DIR=$1/backup.tar.gz
-GROUPS_FILE=$ETCDIR/groups.conf
+while getopts p optvar; do
+    case $optvar in
+		p) BACKUP_PREFIX=${OPTARG} && shift ;;
+		*) usage ;;
+	esac
+    shift
+done
 
+BACKUP_DIR=$1/home-backup.tar.gz
+
+GROUPS_FILE=$ETCDIR/groups.conf
 cat "$GROUPS_FILE" | while read groupname; do
 
   if [ ! "$(getent group $groupname)" ]; then # check if group exists
@@ -29,12 +38,15 @@ cat "$GROUPS_FILE" | while read groupname; do
     fi
 
     home_dir=$(getent passwd $username | cut -d: -f6)
+    foldername=$(getent passwd $username | cut -d/ -f3 | cut -d: -f1)
+    cp -r $home_dir $TEMPDIR
 
     if [ -f $BACKUP_DIR ]; then
-      tar -rf $BACKUP_DIR $home_dir
+      tar -rf -C $BACKUP_DIR $TEMPDIR/$foldername
     else
-      tar -cf $BACKUP_DIR $home_dir
+      tar -cf -C $BACKUP_DIR $TEMPDIR/$foldername
     fi
     echo "SUCCESS: created backup for user $username ($groupname) > $home_dir"
+    rm -rf $TEMPDIR/$foldername
   done
 done
