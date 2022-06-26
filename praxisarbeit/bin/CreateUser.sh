@@ -13,11 +13,11 @@ usage() {
     exit 1
 }
 
-while getopts p optvar ; do
-   case $optvar in
-     p) echo "YEE, $OPTARG" ;; # PASSWORD="${OPTARG}"
-     *) usage ;;
-   esac
+while getopts p optvar; do
+    case $optvar in
+        p) echo "YEE, $OPTARG" ;; # PASSWORD="${OPTARG}"
+        *) usage ;;
+    esac
 done
 
 echo "Default password is: $PASSWORD"
