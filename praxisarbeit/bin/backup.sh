@@ -6,7 +6,7 @@ BINDIR=`pwd`
 cd $cwd
 BASENAME=`basename $0`
 ETCDIR=$BINDIR/../etc
-TEMPDIR=/temp/homebackup
+TEMPDIR=/tmp/homebackup
 mkdir $TEMPDIR
 
 usage() {
