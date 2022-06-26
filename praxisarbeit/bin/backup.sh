@@ -41,16 +41,16 @@ cat "$GROUPS_FILE" | while read groupname; do
     fi
 
     home_dir=$(getent passwd $username | cut -d: -f6)
-    user_folder_name=$(getent passwd $username | cut -d/ -f3 | cut -d: -f1)
-    user_backup_folder_name="$BACKUP_PREFIX$user_folder_name"
+    tmp_user_name=$(getent passwd $username | cut -d/ -f3 | cut -d: -f1)
+    user_backup_dir="$BACKUP_PREFIX$tmp_user_name"
 
     cd $TEMPDIR
-    cp -r $home_dir $user_folder_name >> /dev/null && mv $user_folder_name $user_backup_folder_name >> /dev/null
+    cp -r $home_dir . && mv $tmp_user_name $user_backup_dir >> /dev/null
 
     if [ -f $BACKUP_DIR ]; then
-      tar -rf $BACKUP_DIR $user_backup_folder_name
+      tar -rf $BACKUP_DIR $user_backup_dir
     else
-      tar -cf $BACKUP_DIR $user_backup_folder_name
+      tar -cf $BACKUP_DIR $user_backup_dir
     fi
     cd $pwd
     echo "SUCCESS: created backup for user $username ($groupname) > $home_dir"
