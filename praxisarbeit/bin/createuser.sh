@@ -44,4 +44,4 @@ cat "$USERS_FILE" | while read username groupname firstname lastname; do
     useradd "$username" -g "$groupname" -m -k /etc/skel -p $(openssl passwd -1 "$PASSWORD") -c "$firstname $lastname"
     passwd --expire "$username" > /dev/null
     echo "SUCCESS: Created user $username ($firstname $lastname) with group $groupname."
-done
+done #
