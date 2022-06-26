@@ -10,11 +10,8 @@ Anhand der Analyse wurde folgendes Lösungsdesign entworfen.
 TODO: schreiben sie wie die Skripte aufgerufen werden sollen (d.h. welche Parameter werden übergeben, gibt es Interaktionen mit dem Skript, läuft es automatisch täglich ab?)
 
 ### Ablauf der Automation
-#### Create User UML:
-![Image of the file](./Create_User_uml.drawio.png)
-##### Beschreibung: Dieses Activity Diagramm zeigt, wie man einen User erstellen kann.
 
-
+TODO: Hier kommt ihr UML-Activity Diagramm
 
 ### Konfigurationsdateien
 
