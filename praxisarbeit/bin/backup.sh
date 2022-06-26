@@ -6,7 +6,7 @@ BINDIR=`pwd`
 cd $cwd
 BASENAME=`basename $0`
 ETCDIR=$BINDIR/../etc
-TEMPDIR=$BINDIR/../temp
+TEMPDIR=/temp/homebackup
 
 usage() {
   echo "Usage: $BASENAME [options] [backup dir]"
