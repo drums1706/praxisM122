@@ -20,9 +20,9 @@ while getopts p: optvar ; do
    esac
 done
 
-if [ ! "$PASSWORD" ]; then
-    echo "Error: password not specified"
-    exit 2
+if [ -z "$PASSWORD" ]; then
+    echo "Password is not specified"
+    usage
 fi
 
 USERS_FILE=$1
