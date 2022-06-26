@@ -20,12 +20,7 @@ while getopts p: optvar ; do
    esac
 done
 
-PASSWORD="abc123434"
-
-if [ -z "$PASSWORD" ]; then
-    echo "Password is not specified"
-    usage
-fi
+echo "Default password is: $PASSWORD"
 
 USERS_FILE=$1
 if [ ! -f "$USERS_FILE" ]; then
@@ -34,7 +29,7 @@ if [ ! -f "$USERS_FILE" ]; then
 fi
 
 cat "$USERS_FILE" | while read username groupname firstname lastname; do
-    if [ ! $(getent group $groupname) ]; then # check if group exists
+    if [ ! "$(getent group $groupname)" ]; then # check if group exists
         echo "Warning: Group $groupname doesn't exists. Create new group..."
         groupadd $groupname
     fi
@@ -43,10 +38,11 @@ cat "$USERS_FILE" | while read username groupname firstname lastname; do
         echo "Warning: group is not a backed-up group"
     fi
    
-    if [ $(getent passwd $username) ]; then # check if user already exists
+    if [ "$(getent passwd $username)" ]; then # check if user already exists
         echo "Warning: User $username already exists. Skipping..."
         continue
     fi
 
     useradd "$username" -g "$groupname" -m -k /etc/skel -p "$PASSWORD" -c "$firstname $lastname"
+    passwd --expire "$username"
 done
