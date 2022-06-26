@@ -33,21 +33,20 @@ cat "$GROUPS_FILE" | while read groupname; do
   fi
 
   for username in $(grep ^$groupname:.*$ /etc/group | cut -d: -f4 | sed 's/,/ /g'); do # get all users space separated
-    echo "--------------------> Using user $username in group $groupname"
     if [ ! "$(getent passwd $username)" ]; then # check if user exists
       echo "WARNING: user $username doesn't exists."
       continue
     fi
 
     home_dir=$(getent passwd $username | cut -d: -f6)
-    foldername="$BACKUP_PREFIX$(getent passwd $username | cut -d/ -f3 | cut -d: -f1)"
-    mkdir $TEMPDIR/$foldername && cp -r $home_dir/* $TEMPDIR/$foldername
+    folder_name="$BACKUP_PREFIX$(getent passwd $username | cut -d/ -f3 | cut -d: -f1)"
 
-    cd $TEMPDIR
+    mkdir $folder_name && cp -r $home_dir/* $_
+
     if [ -f $BACKUP_DIR ]; then
-      tar -rf $BACKUP_DIR $foldername > /dev/null
+      tar -rf $BACKUP_DIR $folder_name > /dev/null
     else
-      tar -cf $BACKUP_DIR $foldername > /dev/null
+      tar -cf $BACKUP_DIR $folder_name > /dev/null
     fi
     cd $pwd
     echo "SUCCESS: created backup for user $username ($groupname) > $home_dir"
