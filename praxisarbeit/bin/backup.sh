@@ -32,7 +32,7 @@ cat "$GROUPS_FILE" | while read groupname; do
     continue
   fi
 
-  for username in $(awk -F ':' "/${groupname}/"'{print $4}' /etc/group | tr ',' '\n'); do # get all users space separated
+  for username in $(grep ^$groupname:.*$ /etc/group | cut -d: -f4 | sed 's/,/ /g'); do # get all users space separated
     echo "--------------------> Using user $username in group $groupname"
     if [ ! "$(getent passwd $username)" ]; then # check if user exists
       echo "WARNING: user $username doesn't exists."
