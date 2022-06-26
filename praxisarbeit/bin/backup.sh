@@ -43,9 +43,9 @@ cat "$GROUPS_FILE" | while read groupname; do
     cp -r $home_dir $TEMPDIR
 
     if [ -f $BACKUP_DIR ]; then
-      tar -rf $BACKUP_DIR $TEMPDIR/$BACKUP_PREFIX$foldername > /dev/null
+      tar -rf -C $BACKUP_DIR $TEMPDIR/$BACKUP_PREFIX$foldername > /dev/null
     else
-      tar -cf $BACKUP_DIR $TEMPDIR/$BACKUP_PREFIX$foldername > /dev/null
+      tar -cf -C $BACKUP_DIR $TEMPDIR/$BACKUP_PREFIX$foldername > /dev/null
     fi
     echo "SUCCESS: created backup for user $username ($groupname) > $home_dir"
   done
