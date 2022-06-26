@@ -41,6 +41,7 @@ cat "$GROUPS_FILE" | while read groupname; do
     home_dir=$(getent passwd $username | cut -d: -f6)
     folder_name="$BACKUP_PREFIX$(getent passwd $username | cut -d/ -f3 | cut -d: -f1)"
 
+    cd $TEMPDIR
     mkdir $folder_name && cp -r $home_dir/* $_
 
     if [ -f $BACKUP_DIR ]; then
