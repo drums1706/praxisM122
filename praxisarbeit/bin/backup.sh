@@ -14,11 +14,9 @@ usage() {
   exit 1
 }
 
-BACKUP_PREFIX
-
 while getopts p optvar; do
   case $optvar in
-		p) BACKUP_PREFIX=${OPTARG} && shift ;;
+		p) BACKUP_PREFIX="$OPTARG\_" && shift ;;
 		*) usage ;;
 	esac
   shift
@@ -45,9 +43,9 @@ cat "$GROUPS_FILE" | while read groupname; do
     cp -r $home_dir $TEMPDIR
 
     if [ -f $BACKUP_DIR ]; then
-      tar -rf $BACKUP_DIR $TEMPDIR/$foldername
+      tar -rf $BACKUP_DIR $TEMPDIR/$BACKUP_PREFIX$foldername
     else
-      tar -cf $BACKUP_DIR $TEMPDIR/$foldername
+      tar -cf $BACKUP_DIR $TEMPDIR/$BACKUP_PREFIX$foldername
     fi
     echo "SUCCESS: created backup for user $username ($groupname) > $home_dir"
   done
