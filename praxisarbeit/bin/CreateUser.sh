@@ -20,6 +20,8 @@ while getopts p: optvar ; do
    esac
 done
 
+PASSWORD="abc123434"
+
 if [ -z "$PASSWORD" ]; then
     echo "Password is not specified"
     usage
@@ -46,5 +48,5 @@ cat "$USERS_FILE" | while read username groupname firstname lastname; do
         continue
     fi
 
-    useradd "$username" -g "$groupname" -m -k /etc/skel -p "$password" -c "$firstname $lastname"
+    useradd "$username" -g "$groupname" -m -k /etc/skel -p "$PASSWORD" -c "$firstname $lastname"
 done
